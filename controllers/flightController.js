@@ -1,4 +1,5 @@
-const Flights = require("../models/Flight.js")
+const { Flights } = require("../models/Flight.js")
+const { v4: uuid } = require("uuid")
 
 // get all flights
 exports.getFlights = async (req, res) => {
@@ -14,8 +15,37 @@ exports.getFlights = async (req, res) => {
 }
 
 // get single flights
+exports.getFlight = async (req, res) => {
+  try {
+    let id = req.params.id
+    const flight = Flights.find((flight) => flight.id === id)
+    res.status(200).json({
+      message: "flight",
+      flight,
+    })
+  } catch (error) {}
+}
 
 // book a flight
+exports.bookFlight = async (req, res) => {
+  try {
+    const { title, time, price, date } = await req.body
+    const flight = {
+      id: uuid(),
+      title,
+      time,
+      price,
+      date,
+    }
+    Flights.push(flight)
+    res.status(201).json({
+      message: "flight booked",
+      flight: flight,
+    })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
 
 // update a flight
 
