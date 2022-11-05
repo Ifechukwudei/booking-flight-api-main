@@ -48,5 +48,24 @@ exports.bookFlight = async (req, res) => {
 }
 
 // update a flight
+exports.updateFlight = async (req, res) => {
+  try {
+    let id = req.params.id
+    const flight = Flights.find((flight) => flight.id === id)
+    const { title, time, price, date } = await req.body
+    flight.title = title
+    flight.time = time
+    flight.price = price
+    flight.date = date
+    res.status(200).json({
+      message: "flight update",
+      flight,
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: err.message,
+    })
+  }
+}
 
 // delete a flight
