@@ -63,9 +63,22 @@ exports.updateFlight = async (req, res) => {
     })
   } catch (error) {
     res.status(500).json({
-      message: err.message,
+      message: error.message,
     })
   }
 }
 
 // delete a flight
+exports.deleteFlight = async (req, res) => {
+  try {
+    let id = req.params.id
+    const flight = Flights.find((flight) => flight.id === id)
+    Flights.splice(Flights.indexOf(flight), 1)
+    res.status(200).json({
+      message: "flight deleted",
+      flight,
+    })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
