@@ -33,10 +33,10 @@ exports.bookFlight = async (req, res) => {
     const flight = {
       id: uuid(),
 
-      title: "flight to Canada",
-      time: "1pm",
-      price: "26000",
-      date: "26-06-2022",
+      title,
+      time,
+      price,
+      date,
     }
     Flights.push(flight)
     res.status(201).json({
